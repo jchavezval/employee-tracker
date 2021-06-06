@@ -1,0 +1,32 @@
+DROP DATABASE IF EXISTS thc_db;
+CREATE DATABASE thc_db;
+USE thc_db;
+
+DROP TABLE IF EXISTS department;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS employees;
+
+CREATE TABLE department (
+    id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR (30) NOT NULL
+);
+
+CREATE TABLE role (
+    id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR (30) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    department_id INTEGER UNSIGNED,
+    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL
+);
+
+CREATE TABLE employees (
+    id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR (30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INTEGER UNSIGNED,
+    manager_id INTEGER UNSIGNED,
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL,
+    CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
+);
+
+
